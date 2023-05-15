@@ -1,5 +1,7 @@
 **
 !./Makefile
 !./README.md
-!**.c
-!**.h
+!snakes_and_ladders.c
+!tweets_generator.c
+!markov_chain.c
+!markov_chain.h

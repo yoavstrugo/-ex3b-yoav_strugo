@@ -1,16 +1,22 @@
-SNAKES_PROGRAM_NAME = snakes_and_ladders
-TWEETS_PROGRAM_NAME = tweets_generator
-CC = gcc
-CCFLAGS = -Wall -Wextra -Wvla -std=c99
+SNAKES_PROGRAM_NAME := snakes_and_ladders
+TWEETS_PROGRAM_NAME := tweets_generator
+CC := gcc
+CCFLAGS := -Wall -Wextra -Wvla -g
 
-SOURCES = $(wildcard *.c)
-OBJECTS = $(patsubst %.c, %.o, $(SOURCES))
-HEADERS = $(wildcard *.h)
+ALL_SOURCES := $(wildcard *.c)
+SNAKES_SRCS := $(filter-out tweets_generator.c, $(ALL_SOURCES))
+TWEETS_SRCS := $(filter-out snakes_and_ladders.c, $(ALL_SOURCES))
+
+SNAKES_OBJS := $(patsubst %.c, %.o, $(SNAKES_SRCS))
+TWEETS_OBJS := $(patsubst %.c, %.o, $(TWEETS_SRCS))
 
 all: $(SNAKES_PROGRAM_NAME) $(TWEETS_PROGRAM_NAME)
 
 # main program rule
-$(SNAKES_PROGRAM_NAME) $(TWEETS_PROGRAM_NAME): $(OBJECTS)
+$(SNAKES_PROGRAM_NAME): $(SNAKES_OBJS)
+	$(CC) $(CCFLAGS) $^ -o $@
+
+$(TWEETS_PROGRAM_NAME): $(TWEETS_OBJS)
 	$(CC) $(CCFLAGS) $^ -o $@
 
 # rule for object files
@@ -24,7 +30,7 @@ clean:
 # rules for sources and headers
 depend: .depend
 
-.depend: $(SOURCES)
+.depend: $(ALL_SOURCES)
 	rm -f $@
 	$(CC) $(CFLAGS) -MM $^>>./$@
 
