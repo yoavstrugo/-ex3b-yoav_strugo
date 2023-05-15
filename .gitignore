@@ -1,5 +1,5 @@
 **
-!./Makefile
+!makefile
 !./README.md
 !snakes_and_ladders.c
 !tweets_generator.c
