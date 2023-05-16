@@ -320,8 +320,6 @@ void generate_tweet(MarkovChain *markov_chain, MarkovNode *first_node,
         }
 
         assert(next_node->data != NULL);
-
-        printf(" ");
         markov_chain->print_func(next_node->data);
 
         if (markov_chain->is_last(next_node->data)) {

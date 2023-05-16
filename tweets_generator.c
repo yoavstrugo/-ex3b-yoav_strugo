@@ -132,6 +132,11 @@ bool ends_with_dot(const char *string) {
 
 void print_word(const char *word) {
     printf("%s", word);
+
+    if (!ends_with_dot(word))
+    {
+        printf(" ");
+    }
 }
 
 
