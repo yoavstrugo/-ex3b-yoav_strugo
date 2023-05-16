@@ -34,7 +34,8 @@
  * @param markov_chain Point to the markov chain
  * @return true if memory allocation failed, false on success.
  */
-bool fill_database(FILE *fp, int words_to_read, MarkovChain *markov_chain);
+static bool fill_database(FILE *fp, int words_to_read, MarkovChain
+*markov_chain);
 
 /**
  * @brief Parses the arguments and sets the respective variables. prints a
@@ -43,28 +44,35 @@ bool fill_database(FILE *fp, int words_to_read, MarkovChain *markov_chain);
  * @param argv
  * @return true if file opening failed, false otherwise
  */
-bool parse_arguments(int argc, char *argv[], unsigned int *seed, int
+static bool parse_arguments(int argc, char *argv[], unsigned int *seed, int
 *num_of_tweets, int *num_of_words, FILE **text_corpus_fp);
 
 /*
  * @brief Prints the usage message for the program
  * @param program_name The program's name. should be in argv[0]
  */
-void usage (char *program_name);
+static void usage (char *program_name);
 
 /**
  * @brief Generates the specified amount of tweets from the markov chain.
  * @param num_of_tweets
  * @param markov_chain
  */
-void generate_tweets(int num_of_tweets, MarkovChain *markov_chain);
+static void generate_tweets(int num_of_tweets, MarkovChain *markov_chain);
 
-bool ends_with_dot(const char *string);
+static bool ends_with_dot(const char *string);
 
-void print_word(const char *word);
+static void print_word(const char *word);
 
-char *duplicate_string(const char *str);
+static char *duplicate_string(const char *str) {
+    char *duplicated_str = (char *) malloc(strlen(str) + 1);
+    if (duplicated_str == NULL) {
+        return NULL;
+    }
 
+    strcpy(duplicated_str, str);
+    return duplicated_str;
+}
 
 /**
  * @brief The main function of the program. The program will generate random
@@ -119,7 +127,7 @@ int main(int argc, char *argv[]) {
     return EXIT_SUCCESS;
 }
 
-void generate_tweets(int num_of_tweets, MarkovChain *markov_chain) {
+static void generate_tweets(int num_of_tweets, MarkovChain *markov_chain) {
     for (int i = 0; i < num_of_tweets; ++i) {
         printf("Tweet %d: ", i + 1);
         generate_sentence(markov_chain, NULL, MAX_TWEET_LENGTH);
@@ -130,21 +138,13 @@ void generate_tweets(int num_of_tweets, MarkovChain *markov_chain) {
  * @brief Prints the usage message for the program
  * @param program_name The program's name. should be in argv[0]
  */
-void usage (char *program_name)
+static void usage (char *program_name)
 {
   fprintf (stdout, USAGE_FORMAT, basename (program_name));
 }
 
 
-char *duplicate_string(const char *str) {
-    char *duplicated_str = (char *) malloc(strlen(str) + 1);
-    if (duplicated_str == NULL) {
-        return NULL;
-    }
 
-    strcpy(duplicated_str, str);
-    return duplicated_str;
-}
 
 bool ends_with_dot(const char *string) {
     if (string[strlen(string) - 1] == '.') {
