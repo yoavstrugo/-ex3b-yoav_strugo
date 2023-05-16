@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
 
     markov_chain = new_markov_chain((print_func_t) print_word,
                                     (comp_func_t) strcmp,
-                                    (copy_func_t) strdup,
+                                    (copy_func_t) duplicate_string,
                                     (free_data_t) free,
                                     (is_last_t) ends_with_dot);
 
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
 void generate_tweets(int num_of_tweets, MarkovChain *markov_chain) {
     for (int i = 0; i < num_of_tweets; ++i) {
         printf("Tweet %d: ", i + 1);
-        generate_tweet(markov_chain, NULL, MAX_TWEET_LENGTH);
+        generate_sentence(markov_chain, NULL, MAX_TWEET_LENGTH);
     }
 }
 
@@ -133,7 +133,7 @@ void usage (char *program_name)
 }
 
 
-char *strdup(const char *str) {
+char *duplicate_string(const char *str) {
     char *duplicated_str = (char *) malloc(strlen(str) + 1);
     if (duplicated_str == NULL) {
         return NULL;
@@ -153,11 +153,6 @@ bool ends_with_dot(const char *string) {
 
 void print_word(const char *word) {
     printf("%s", word);
-
-    if (!ends_with_dot(word))
-    {
-        printf(" ");
-    }
 }
 
 

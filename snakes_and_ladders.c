@@ -1,5 +1,6 @@
 #include <string.h> // For strlen(), strcmp(), strcpy()
 #include <assert.h>
+#include <libgen.h>
 
 #include "markov_chain.h"
 
@@ -153,7 +154,7 @@ void parse_arguments(char *argv[], unsigned int *seed, int
                          DECIMAL_BASE);
 }
 
-bool check_usage(int argc, char *argv[]) {
+bool check_usage(int argc) {
     if (argc != ARG_COUNT) {
         return true;
     }
@@ -205,7 +206,8 @@ void generate_walks(int num_of_walks, MarkovChain *markov_chain,
 {
     for (int i = 0; i < num_of_walks; ++i) {
         printf("Random Walk %d: ", i + 1);
-        generate_tweet(markov_chain, first_markov_node, MAX_GENERATION_LENGTH);
+        generate_sentence(markov_chain, first_markov_node,
+                          MAX_GENERATION_LENGTH);
     }
 }
 
@@ -216,7 +218,7 @@ void generate_walks(int num_of_walks, MarkovChain *markov_chain,
  * @return EXIT_SUCCESS or EXIT_FAILURE
  */
 int main(int argc, char *argv[]) {
-    if (check_usage(argc, argv)) {
+    if (check_usage(argc)) {
         usage(argv[PROGRAM_NAME_ARG_INDEX]);
         return EXIT_FAILURE;
     }

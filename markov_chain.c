@@ -295,8 +295,8 @@ MarkovNode *get_next_random_node(MarkovNode *state_struct_ptr) {
     return NULL;
 }
 
-void generate_tweet(MarkovChain *markov_chain, MarkovNode *first_node,
-                    int max_length) {
+void generate_sentence(MarkovChain *markov_chain, MarkovNode *first_node,
+                       int max_length) {
     assert(markov_chain != NULL);
 
     if (first_node == NULL) {
@@ -305,6 +305,7 @@ void generate_tweet(MarkovChain *markov_chain, MarkovNode *first_node,
 
     MarkovNode *prev_node;
     prev_node = first_node;
+
     assert(first_node != NULL);
     assert(first_node->data != NULL);
 
@@ -320,6 +321,7 @@ void generate_tweet(MarkovChain *markov_chain, MarkovNode *first_node,
         }
 
         assert(next_node->data != NULL);
+        printf(" ");
         markov_chain->print_func(next_node->data);
 
         if (markov_chain->is_last(next_node->data)) {

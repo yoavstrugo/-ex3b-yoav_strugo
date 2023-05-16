@@ -214,7 +214,7 @@ MarkovNode *get_next_random_node (MarkovNode *state_struct_ptr);
  *                   if NULL- choose a random markov_node
  * @param  max_length maximum length of chain to generate
  */
-void generate_tweet (MarkovChain *markov_chain, MarkovNode *
+void generate_sentence (MarkovChain *markov_chain, MarkovNode *
 first_node, int max_length);
 
 /**
