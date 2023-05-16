@@ -25,7 +25,10 @@ $(TWEETS_PROGRAM_NAME): $(TWEETS_OBJS)
 
 clean:
 	rm -f *.o
-	rm -f $(PROGRAM_NAME)
+	rm -f $(SNAKES_PROGRAM_NAME)
+	rm -f $(TWEETS_PROGRAM_NAME)
+	rm -f .depend
+
 
 # rules for sources and headers
 depend: .depend

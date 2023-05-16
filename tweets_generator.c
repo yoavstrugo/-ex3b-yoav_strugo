@@ -1,16 +1,19 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <libgen.h>
 
 #include "markov_chain.h"
-#include "common.h"
 
-#define USAGE_FMT "Usage: %s [seed] [num_of_tweets] \
+#define USAGE_FORMAT "Usage: %s [seed] [num_of_tweets] \
 [text_corpus] ?[num_of_words]\n"
+#define ERROR_OPEN_FILE_FMT "Error: Failed to open file %s.\n"
+
 
 #define ARG_COUNT_WITH_NUM_OF_WORD    5
 #define ARG_COUNT_WITHOUT_NUM_OF_WORD 4
 
+#define PROGRAM_NAME_ARG_INDEX  0
 #define SEED_ARG_INDEX          1
 #define TWEET_COUNT_ARG_INDEX   2
 #define TEXT_CORPUS_ARG_INDEX   3
@@ -19,6 +22,8 @@
 #define READ_ALL_WORDS          (-1)
 #define MAX_SENTENCE_LENGTH     1000
 #define MAX_TWEET_LENGTH 20
+
+#define DECIMAL_BASE            10
 
 /**
  * @brief Fills the database of the given markov chain, from the words in
@@ -40,6 +45,12 @@ bool fill_database(FILE *fp, int words_to_read, MarkovChain *markov_chain);
  */
 bool parse_arguments(int argc, char *argv[], unsigned int *seed, int
 *num_of_tweets, int *num_of_words, FILE **text_corpus_fp);
+
+/*
+ * @brief Prints the usage message for the program
+ * @param program_name The program's name. should be in argv[0]
+ */
+void usage (char *program_name);
 
 /**
  * @brief Generates the specified amount of tweets from the markov chain.
@@ -69,7 +80,7 @@ int main(int argc, char *argv[]) {
     /** input validation */
     if (argc != ARG_COUNT_WITHOUT_NUM_OF_WORD
         && argc != ARG_COUNT_WITH_NUM_OF_WORD) {
-        usage(argv[PROGRAM_NAME_ARG_INDEX], USAGE_FMT);
+        usage(argv[PROGRAM_NAME_ARG_INDEX]);
         return EXIT_FAILURE;
     }
 
@@ -111,6 +122,16 @@ void generate_tweets(int num_of_tweets, MarkovChain *markov_chain) {
         generate_tweet(markov_chain, NULL, MAX_TWEET_LENGTH);
     }
 }
+
+/**
+ * @brief Prints the usage message for the program
+ * @param program_name The program's name. should be in argv[0]
+ */
+void usage (char *program_name)
+{
+  fprintf (stdout, USAGE_FORMAT, basename (program_name));
+}
+
 
 char *strdup(const char *str) {
     char *duplicated_str = (char *) malloc(strlen(str) + 1);

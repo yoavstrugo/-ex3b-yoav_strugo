@@ -5,5 +5,3 @@
 !tweets_generator.c
 !markov_chain.c
 !markov_chain.h
-!common.c
-!common.h

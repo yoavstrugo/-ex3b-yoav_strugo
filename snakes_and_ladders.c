@@ -1,20 +1,23 @@
 #include <string.h> // For strlen(), strcmp(), strcpy()
 #include <assert.h>
+
 #include "markov_chain.h"
-#include "common.h"
 
 #define MAX(X, Y) (((X) < (Y)) ? (Y) : (X))
 
-#define EMPTY -1
+#define EMPTY (-1)
 #define BOARD_SIZE 100
 #define MAX_GENERATION_LENGTH 60
 
 #define DICE_MAX 6
 #define NUM_OF_TRANSITIONS 20
 
+#define PROGRAM_NAME_ARG_INDEX  0
 #define SEED_ARG_INDEX  1
 #define NUM_OF_SENTENCES_ARG_INDEX  2
 #define ARG_COUNT 3
+
+#define DECIMAL_BASE            10
 
 #define USAGE_FORMAT   "Usage: %s [seed] [num_of_sentences]"
 
@@ -62,6 +65,14 @@ static int handle_error(char *error_msg, MarkovChain **database) {
     return EXIT_FAILURE;
 }
 
+/**
+ * @brief Prints the usage message for the program
+ * @param program_name The program's name. should be in argv[0]
+ */
+void usage (char *program_name)
+{
+  fprintf (stdout, USAGE_FORMAT, basename (program_name));
+}
 
 static int create_board(Cell *cells[BOARD_SIZE]) {
     for (int i = 0; i < BOARD_SIZE; i++) {
@@ -206,7 +217,7 @@ void generate_walks(int num_of_walks, MarkovChain *markov_chain,
  */
 int main(int argc, char *argv[]) {
     if (check_usage(argc, argv)) {
-        usage(argv[PROGRAM_NAME_ARG_INDEX], USAGE_FORMAT);
+        usage(argv[PROGRAM_NAME_ARG_INDEX]);
         return EXIT_FAILURE;
     }
 
