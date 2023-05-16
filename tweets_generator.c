@@ -63,6 +63,9 @@ bool ends_with_dot(const char *string);
 
 void print_word(const char *word);
 
+char *duplicate_string(const char *str);
+
+
 /**
  * @brief The main function of the program. The program will generate random
  * tweets, using the tweets in text corpus.
