@@ -238,6 +238,7 @@ void free_database(MarkovChain **ptr_chain) {
 
     // free the database linked list
     free((*ptr_chain)->database);
+    free(*ptr_chain);
     *ptr_chain = NULL;
 }
 
@@ -261,7 +262,7 @@ MarkovNode *get_first_random_node(MarkovChain *markov_chain) {
     do {
         int random_index = get_random_number(markov_chain->database->size);
         node = get_node_in_index(markov_chain->database, random_index);
-    } while (markov_chain->is_last(node->data));
+    } while (markov_chain->is_last(node->data->data));
 
     return node->data;
 }
@@ -291,7 +292,6 @@ MarkovNode *get_next_random_node(MarkovNode *state_struct_ptr) {
         random_weight -= state_struct_ptr->frequencies_list[i].frequency;
     }
 
-    assert("Shouldn't get here");
     return NULL;
 }
 
@@ -311,7 +311,8 @@ void generate_tweet(MarkovChain *markov_chain, MarkovNode *first_node,
     markov_chain->print_func(first_node->data);
 
     MarkovNode *next_node;
-    for (int i = 0; i < max_length; ++i) {
+    // start i from 1 because we already have first node
+    for (int i = 1; i < max_length; ++i) {
         next_node = get_next_random_node(prev_node);
 
         if (next_node == NULL) {
@@ -320,10 +321,10 @@ void generate_tweet(MarkovChain *markov_chain, MarkovNode *first_node,
 
         assert(next_node->data != NULL);
 
-        markov_chain->print_func(next_node->data);
         printf(" ");
+        markov_chain->print_func(next_node->data);
 
-        if (markov_chain->is_last(next_node)) {
+        if (markov_chain->is_last(next_node->data)) {
             break;
         }
 
