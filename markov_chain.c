@@ -295,8 +295,8 @@ MarkovNode *get_next_random_node(MarkovNode *state_struct_ptr) {
     return NULL;
 }
 
-void generate_sentence(MarkovChain *markov_chain, MarkovNode *first_node,
-                       int max_length) {
+void generate_tweet(MarkovChain *markov_chain, MarkovNode *first_node,
+                    int max_length) {
     assert(markov_chain != NULL);
 
     if (first_node == NULL) {

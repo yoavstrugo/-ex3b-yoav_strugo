@@ -130,7 +130,7 @@ int main(int argc, char *argv[]) {
 static void generate_tweets(int num_of_tweets, MarkovChain *markov_chain) {
     for (int i = 0; i < num_of_tweets; ++i) {
         printf("Tweet %d: ", i + 1);
-        generate_sentence(markov_chain, NULL, MAX_TWEET_LENGTH);
+        generate_tweet(markov_chain, NULL, MAX_TWEET_LENGTH);
     }
 }
 

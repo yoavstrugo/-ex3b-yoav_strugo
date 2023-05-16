@@ -206,8 +206,8 @@ void generate_walks(int num_of_walks, MarkovChain *markov_chain,
 {
     for (int i = 0; i < num_of_walks; ++i) {
         printf("Random Walk %d: ", i + 1);
-        generate_sentence(markov_chain, first_markov_node,
-                          MAX_GENERATION_LENGTH);
+        generate_tweet(markov_chain, first_markov_node,
+                       MAX_GENERATION_LENGTH);
     }
 }
 
